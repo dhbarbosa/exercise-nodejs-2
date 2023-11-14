@@ -1,0 +1,9 @@
+.gitignore
+.prettierrc.json
+docker-compose.yaml
+docker
+docs
+node_module
+Dockerfile
+.tool-version
+README.md

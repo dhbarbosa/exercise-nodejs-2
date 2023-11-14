@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+    mysql:
+        build:
+            context: ./docker
+            dockerfile: Dockerfile
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        ports:
+            - '3306:3306'
+        networks:
+            escola:
+                ipv4_address: 172.18.0.2
+    node:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '8080:8080'
+        networks:
+            escola:
+                ipv4_address: 172.18.0.3
+        depends_on:
+            - mysql
+networks:
+    escola:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.18.0.0/16
