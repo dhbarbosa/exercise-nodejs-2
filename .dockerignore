@@ -7,3 +7,4 @@ node_module
 Dockerfile
 .tool-version
 README.md
+.env.exemplo

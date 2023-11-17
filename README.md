@@ -4,9 +4,17 @@
 
 Para poder executar, é necessário ter um banco MySQL rodando na porta 3306. Se preferir, pode usar Docker para executar o sistema.
 
+### Docker
+
+Basta renomear a .env.exemplo para .env
+
 ```
 docker compose up 
 ```
+
+### Cli
+
+Basta renomear e colocar para localhost a porta do banco de dados
 
 ou, se preferir, pode executar com:
 
