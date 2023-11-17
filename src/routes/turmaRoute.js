@@ -2,44 +2,44 @@ import express from 'express'
 import Turma from '../models/Turma.js'
 
 const router = express.Router()
-
-router.get('/turma', (req, res) => {
+const isLoggedIn = true
+router.get('/', (req, res) => {
     Turma.findAll().then((turmas) => {
         turmas = turmas.map((turma) => {
             return turma.toJSON()
         })
-        res.render('admin/turma/turma', { turmas: turmas })
+        res.render('admin/turma/turma', { turmas: turmas, isLoggedIn })
     })
 })
 
-router.get('/turma/add', (req, res) => {
+router.get('/create', (req, res) => {
     res.render('admin/turma/addturma')
 })
 
-router.get('/editar_turma/:id', (req, res) => {
+router.get('/edit/:id', (req, res) => {
     Turma.findAll({
         where: { id_turma: req.params.id },
     }).then((turmas) => {
         turmas = turmas.map((turma) => {
             return turma.toJSON()
         })
-        res.render('admin/turma/editturma', { turmas: turmas })
+        res.render('admin/turma/editturma', { turmas: turmas, isLoggedIn })
     })
 })
 
-router.post('/turma/nova', (req, res) => {
+router.post('/create', (req, res) => {
     Turma.create({
         descricao: req.body.descricao,
     })
         .then(() => {
-            res.redirect('/rota_turma/turma')
+            res.redirect('/professor/turma/')
         })
         .catch((erro) => {
             res.send('Houve um erro: ' + erro)
         })
 })
 
-router.post('/turma/editar_turma', (req, res) => {
+router.post('/edit', (req, res) => {
     Turma.update(
         {
             descricao: req.body.descricao,
@@ -50,21 +50,21 @@ router.post('/turma/editar_turma', (req, res) => {
         }
     )
         .then(() => {
-            res.redirect('/rota_turma/turma')
+            res.redirect('/professor/turma/')
         })
         .catch((erro) => {
             res.send('Esta turma não existe ' + erro)
         })
 })
 
-router.get('/deletar_turma/:id', (req, res) => {
+router.get('/delete/:id', (req, res) => {
     console.log(req.params.id)
     Turma.destroy({ where: { id_turma: req.params.id } })
         .then(() => {
-            res.redirect('/rota_turma/turma')
+            res.redirect('/professor/turma/')
         })
         .catch((err) => {
-            res.render('Esse turma não existe')
+            res.render('Esse turma não existe', { isLoggedIn })
         })
 })
 

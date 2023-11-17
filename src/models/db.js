@@ -17,11 +17,11 @@ const sequelize = new Sequelize(
         host: connection.HOST,
         port: connection.PORT_DB,
         dialect: 'mysql',
+        logging: false,
     }
 )
 
 async function testConnection() {
-    console.info(connection)
     try {
         await sequelize.authenticate()
         console.log('> Conexão com o banco de dados estabelecida com sucesso.')
