@@ -1,59 +1,46 @@
-create database if not exists escola;
+CREATE DATABASE IF NOT EXISTS escola;
+USE escola;
 
-use escola;
+CREATE TABLE IF NOT EXISTS turma(
+    id_turma INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(50),
+    createdAt DATETIME,
+    updatedAt DATETIME
+);
 
-create table if NOT EXISTS turma(
+CREATE TABLE IF NOT EXISTS aluno(
+    id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    matricula INTEGER,
+    nome VARCHAR(100),
+    fk_turma INT,
+    createdAt DATETIME,
+    updatedAt DATETIME,
+    INDEX aluno_FKIndex1(fk_turma),
+    FOREIGN KEY(fk_turma) REFERENCES turma(id_turma) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
-id_turma int not null auto_increment primary key,
+CREATE TABLE IF NOT EXISTS professor(
+    id_professor INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    createdAt DATETIME,
+    updatedAt DATETIME
+);
 
-descricao varchar(50),
+INSERT INTO turma VALUES (DEFAULT, "Informática", NOW(), NOW());
+INSERT INTO turma VALUES (DEFAULT, "Recursos Humanos", NOW(), NOW());
 
-createdAt datetime,
+INSERT INTO aluno VALUES (DEFAULT, 4453, 'Jose', 1, NOW(), NOW());
+INSERT INTO aluno VALUES (DEFAULT, 4454, 'Matheus', 2, NOW(), NOW());
+INSERT INTO aluno VALUES (DEFAULT, 4455, 'Guilherme', 1, NOW(), NOW());
+INSERT INTO aluno VALUES (DEFAULT, 4456, 'Gael', 2, NOW(), NOW());
 
-updatedAt datetime);
+SELECT a.id_aluno AS id_aluno, a.matricula AS matricula, a.nome AS nome, t.descricao
+FROM aluno AS a
+INNER JOIN turma AS t ON a.fk_turma = t.id_turma;
 
-create table if not exists aluno(
-
-id_aluno int not null auto_increment primary key,
-
-matricula integer,
-
-nome varchar(100),
-
-fk_turma int,
-
-createdAt datetime,
-
-updatedAt datetime,
-
-INDEX aluno_FKIndex1(fk_turma),
-
-FOREIGN KEY(fk_turma)
-
-REFERENCES turma(id_turma)
-
-ON DELETE NO ACTION
-
-ON UPDATE NO ACTION);
-
-insert into turma values(default, "Informática", now(), now());
-
-insert into turma values(default, "Recursos Humanos",now(), now());
-
-insert into aluno values(default, 04453,'Jose', 1, now(), now());
-
-insert into aluno values(default, 04454,'Matheus', 2, now(), now());
-
-insert into aluno values(default, 04455,'Guilherme', 1, now(), now());
-
-insert into aluno values(default, 04456,'Gael', 2, now(), now());
-
-select * from turma;
-
-select * from aluno;
-
-select a.id_aluno as id_aluno, a.matricula as matricula, a.nome as nome, t.descricao from aluno as a inner join turma as t on a.fk_turma=t.id_turma;
-
-create view selecAluno as select a.id_aluno as id_aluno, a.matricula as matricula, a.nome as nome, t.descricao from aluno as a inner join turma as t on a.fk_turma=t.id_turma;
-
-select * from selecAluno;
+CREATE VIEW selecAluno AS
+SELECT a.id_aluno AS id_aluno, a.matricula AS matricula, a.nome AS nome, t.descricao
+FROM aluno AS a
+INNER JOIN turma AS t ON a.fk_turma = t.id_turma;
