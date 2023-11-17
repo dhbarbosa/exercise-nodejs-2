@@ -20,6 +20,10 @@ npm run start:dev
 
 ![Home](./docs/home.png)
 
+### Logado
+
+![Home](./docs/logado.png)
+
 ### Aluno
 
 #### Cadastrar alunos

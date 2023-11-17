@@ -43,7 +43,16 @@ router.post('/login', async (req, res) => {
 
 router.get('/', authentication, (req, res) => {
     const isLoggedIn = true
-    res.render('admin/logado', { isLoggedIn })
+
+    Professor.findAll({ where: { email: req.session.username } }).then(
+        (professor) => {
+            console.log(professor)
+            res.render('admin/logado', {
+                isLoggedIn,
+                nprofessor: professor,
+            })
+        }
+    )
 })
 
 export default router
