@@ -14,9 +14,7 @@ docker compose up
 
 ### Cli
 
-Basta renomear e colocar para localhost a porta do banco de dados
-
-ou, se preferir, pode executar com:
+Basta renomear o arquivo .env.exemplo para .env e colocar o endereço ip do banco para localhost, se estiver rodando localmente. E configurar os restantes dos dados
 
 ```
 npm run start:dev
